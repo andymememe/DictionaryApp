@@ -19,7 +19,7 @@ namespace DictionaryAPI.ApiClient
                 }
                 catch (Exception e)
                 {
-                    return string.Format("(連線錯誤: {0})", e.Message);
+                    return string.Format("{{result: \"(連線錯誤: {0})\"}}", e.Message);
                 }
             }
         }

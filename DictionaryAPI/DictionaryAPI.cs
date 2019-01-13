@@ -17,7 +17,6 @@ namespace DictionaryAPI
         public static readonly string URLString = "https://glosbe.com/gapi/translate?from={0}&dest={1}&format=json&phrase={2}&pretty=true";
 
         internal const int LOCALE_SYSTEM_DEFAULT = 0x0800;
-        internal const int LCMAP_SIMPLIFIED_CHINESE = 0x02000000;
         internal const int LCMAP_TRADITIONAL_CHINESE = 0x04000000;
 
         // Simplified Chinese to Tradional Chinese
@@ -37,36 +36,27 @@ namespace DictionaryAPI
             try
             {
                 Translate result = JsonConvert.DeserializeObject<Translate>(jsonText);
-                string translateResult = "";
-                string resultToZHTW = "";
+                string translateResult = "(查無結果)";
 
-                if (!fromCode.Equals(toCode)) // Translate
+                if (result.result != "ok")
                 {
-                    if (result.result == "ok" &&
+                    translateResult = result.result;
+                }
+                else if (result.tuc != null &&
+                         result.tuc.Length > 0)
+                {
+                    if (!fromCode.Equals(toCode) &&
                         result.tuc != null &&
                         result.tuc.Length > 0 &&
-                        result.tuc[0].phrase != null)
+                        result.tuc[0].phrase != null) // Translate
                     {
                         translateResult = result.tuc[0].phrase.text;
                     }
-                    else
-                    {
-                        translateResult = "(查無結果)";
-                    }
-                }
-                else // Meaning
-                {
-                    if (result.result == "ok" &&
-                        result.tuc != null &&
-                        result.tuc.Length > 0 &&
-                        result.tuc[0].meanings != null &&
-                        result.tuc[0].meanings.Length > 0)
+                    else if (fromCode.Equals(toCode) &&
+                             result.tuc[0].meanings != null &&
+                             result.tuc[0].meanings.Length > 0)// Meaning
                     {
                         translateResult = result.tuc[0].meanings[0].text;
-                    }
-                    else
-                    {
-                        translateResult = "(查無結果)";
                     }
                 }
 
@@ -75,19 +65,24 @@ namespace DictionaryAPI
                     return translateResult;
                 }
 
-                resultToZHTW = new string(' ', translateResult.Length);
-                LCMapString(LOCALE_SYSTEM_DEFAULT,
-                            LCMAP_TRADITIONAL_CHINESE,
-                            translateResult,
-                            translateResult.Length,
-                            resultToZHTW,
-                            translateResult.Length); // Translating Chinese Result (Simp. -> Trad.)
-                return resultToZHTW;
+                return ToTraditionalChinese(translateResult);
             }
             catch (Exception e)
             {
                 return string.Format("(剖析錯誤: {0})", e.Message);
             }
+        }
+
+        private static string ToTraditionalChinese(string input)
+        {
+            string resultToHanT = new string(' ', input.Length);
+            LCMapString(LOCALE_SYSTEM_DEFAULT,
+                        LCMAP_TRADITIONAL_CHINESE,
+                        input,
+                        input.Length,
+                        resultToHanT,
+                        input.Length); // Translating Chinese Result (Simp. -> Trad.)
+            return resultToHanT;
         }
     }
 }
