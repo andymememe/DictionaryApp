@@ -8,8 +8,8 @@
     <ProjectGuid>{31444A84-251B-4862-9C52-A4876C8DD4E4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DictionaryApi.Test</RootNamespace>
-    <AssemblyName>DictionaryApi.Test</AssemblyName>
+    <RootNamespace>DictionaryAPI.Test</RootNamespace>
+    <AssemblyName>DictionaryAPI.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
