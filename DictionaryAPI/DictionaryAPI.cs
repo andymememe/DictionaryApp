@@ -46,8 +46,6 @@ namespace DictionaryAPI
                          result.tuc.Length > 0)
                 {
                     if (!fromCode.Equals(toCode) &&
-                        result.tuc != null &&
-                        result.tuc.Length > 0 &&
                         result.tuc[0].phrase != null) // Translate
                     {
                         translateResult = result.tuc[0].phrase.text;
