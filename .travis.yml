@@ -1,8 +1,8 @@
 language: csharp
 solution: DictionaryApp.sln
-before_install:
-  - sudo apt-get install nunit-console
-before_script:
-  - nuget restore solution-name.sln
-after_script:
-  - nunit-console DictionaryApi.Test/bin/Release/DictionaryApi.Test.dll
+install:
+  - nuget restore DictionaryApp.sln
+  - nuget install NUnit.Console -Version 3.9.0 -OutputDirectory testrunner
+script:
+  - msbuild /p:Configuration=Release DictionaryApp.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.9.0/tools/nunit3-console.exe ./DictionaryApi.Test/bin/Release/DictionaryApi.Test.dll
