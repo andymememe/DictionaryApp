@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiClient\HttpApiClient.cs" />
     <Compile Include="ApiClient\IApiClient.cs" />
     <Compile Include="DictionaryAPI.cs" />
     <Compile Include="Utils\Meaning.cs" />

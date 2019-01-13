@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using DictionaryAPI.Utils;
+using DictionaryAPI.ApiClient;
 
 namespace DictionaryAPI
 {
@@ -23,21 +24,10 @@ namespace DictionaryAPI
         [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int LCMapString(int Locale, int dwMapFlags, string lpSrcStr, int cchSrc, [Out] string lpDestStr, int cchDest);
 
-        public async static Task<string> GetResult(string fromCode, string toCode, string input)
+        public async static Task<string> GetResult(IApiClient client, string fromCode, string toCode, string input)
         {
-            string jsonText = "";
             string connUrl = string.Format(URLString, fromCode, toCode, input);
-            try
-            {
-                WebResponse httpResult = await WebRequest.Create(connUrl).GetResponseAsync();
-                Stream textStream = httpResult.GetResponseStream();
-                StreamReader textReader = new StreamReader(textStream);
-                jsonText = await textReader.ReadToEndAsync();
-            }
-            catch (Exception e)
-            {
-                return string.Format("(連線錯誤: {0})", e.Message);
-            }
+            string jsonText = await client.GetResultAsync(connUrl);
 
             return ParseResult(fromCode, toCode, jsonText);
         }

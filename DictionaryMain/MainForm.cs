@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DictionaryAPI;
+using DictionaryAPI.ApiClient;
 
 namespace DictionaryMain
 {
@@ -23,6 +24,7 @@ namespace DictionaryMain
         };
 
         private bool _isConn;
+        private HttpApiClient _client;
 
         public MainForm()
         {
@@ -32,6 +34,7 @@ namespace DictionaryMain
         private void MainForm_Shown(object sender, EventArgs e)
         {
             _isConn = false;
+            _client = new HttpApiClient();
             Languages.Keys.ToList().ForEach(s => fromBox.Items.Add(s));
             Languages.Keys.ToList().ForEach(s => toBox.Items.Add(s));
             fromBox.SelectedIndex = 0;
@@ -66,7 +69,7 @@ namespace DictionaryMain
 
         private async void getResult(string fromCode, string toCode, string input)
         {
-            resultBox.Text = await DictionaryAPIConnection.GetResult(fromCode, toCode, input);
+            resultBox.Text = await DictionaryAPIConnection.GetResult(_client, fromCode, toCode, input);
             _isConn = false;
             inputBox.Enabled = true;
             fromBox.Enabled = true;

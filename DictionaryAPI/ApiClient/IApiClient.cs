@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DictionaryAPI.ApiClient
 {
-    interface IApiClient
+    public interface IApiClient
     {
-        void GetResultAsync(string uri);
+        Task<string> GetResultAsync(string url);
     }
 }
