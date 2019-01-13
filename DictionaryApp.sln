@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryMain", "Dictionar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryAPI", "DictionaryAPI\DictionaryAPI.csproj", "{154DF744-A730-4456-B0EB-FBCFBD53390D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryAPI.Test", "DictionaryAPI.Test\DictionaryAPI.Test.csproj", "{DDD6AF98-DD79-4860-B85A-E9F9DA0B0DF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryApi.Test", "DictionaryApi.Test\DictionaryApi.Test.csproj", "{31444A84-251B-4862-9C52-A4876C8DD4E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{154DF744-A730-4456-B0EB-FBCFBD53390D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{154DF744-A730-4456-B0EB-FBCFBD53390D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{154DF744-A730-4456-B0EB-FBCFBD53390D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDD6AF98-DD79-4860-B85A-E9F9DA0B0DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDD6AF98-DD79-4860-B85A-E9F9DA0B0DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDD6AF98-DD79-4860-B85A-E9F9DA0B0DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDD6AF98-DD79-4860-B85A-E9F9DA0B0DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31444A84-251B-4862-9C52-A4876C8DD4E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31444A84-251B-4862-9C52-A4876C8DD4E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31444A84-251B-4862-9C52-A4876C8DD4E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31444A84-251B-4862-9C52-A4876C8DD4E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,6 @@
 ﻿using DictionaryAPI.ApiClient;
+using DictionaryAPI.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +11,117 @@ namespace DictionaryAPI.Test
 {
     class MockApiClient : IApiClient
     {
-        public enum Types { Ok, EmptyTranlate, EmptyMeaning, ConnError };
+        public enum Type {
+            OkNotChsPhrase,
+            OkChsPhrase,
+            OkNotChsMeaning,
+            OkChsMeaning,
+            NullTranslatePhrase,
+            ZeroMeaning,
+            EmptyMeaning,
+            ConnError,
+            ZeroResult,
+            NullResult,
+            NotJson
+        };
 
-        private Types _type;
+        private Type _type;
 
-        public MockApiClient(Types type)
+        public MockApiClient()
+        {
+            _type = Type.OkNotChsPhrase;
+        }
+
+        public void SetType(Type type)
         {
             _type = type;
         }
 
-        public Task<string> GetResultAsync(string url)
+        public async Task<string> GetResultAsync(string url)
         {
+            Translate mockResult = new Translate();
+            mockResult.result = "ok";
+
             switch (_type)
             {
-                case Types.Ok:
+                case Type.OkNotChsPhrase:
+                    mockResult.tuc = new TranslateResult[1]
+                    {
+                        new TranslateResult()
+                        {
+                            phrase = new Phrase() { text = "English" }
+                        }
+                    };
                     break;
-                case Types.EmptyTranlate:
+                case Type.OkChsPhrase:
+                    mockResult.tuc = new TranslateResult[1]
+                    {
+                        new TranslateResult()
+                        {
+                            phrase = new Phrase() { text = "简化字" }
+                        }
+                    };
                     break;
-                case Types.EmptyMeaning:
+                case Type.OkNotChsMeaning:
+                    mockResult.tuc = new TranslateResult[1]
+                    {
+                        new TranslateResult()
+                        {
+                            meanings = new Meaning[1] {
+                                new Meaning() { text = "English meaning" }
+                            }
+                        }
+                    };
                     break;
-                case Types.ConnError:
+                case Type.OkChsMeaning:
+                    mockResult.tuc = new TranslateResult[1]
+                    {
+                        new TranslateResult()
+                        {
+                            meanings = new Meaning[1] {
+                                new Meaning() { text = "简化字" }
+                            }
+                        }
+                    };
+                    break;
+                case Type.NullTranslatePhrase:
+                    mockResult.tuc = new TranslateResult[1]
+                    {
+                        new TranslateResult()
+                        {
+                            phrase = null
+                        }
+                    };
+                    break;
+                case Type.ZeroMeaning:
+                    mockResult.tuc = new TranslateResult[1] {
+                        new TranslateResult() {
+                            meanings = new Meaning[0]
+                        }
+                    };
+                    break;
+                case Type.EmptyMeaning:
+                    mockResult.tuc = new TranslateResult[1] {
+                        new TranslateResult() {
+                            meanings = null
+                        }
+                    };
+                    break;
+                case Type.ConnError:
+                    mockResult.result = "(連線錯誤)";
+                    break;
+                case Type.ZeroResult:
+                    mockResult.tuc = new TranslateResult[0];
+                    break;
+                case Type.NullResult:
+                    mockResult.tuc = null;
+                    break;
+                case Type.NotJson:
                 default:
-                    return new Task<string>(() => "(連線錯誤)");
+                    return await Task.Run(() => "Not Json");
             }
+
+            return await Task.Run(() => JsonConvert.SerializeObject(mockResult));
         }
     }
 }

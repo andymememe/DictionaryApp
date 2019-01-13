@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DictionaryAPI.Utils
 {
-    class Meaning
+    public class Meaning
     {
         public string text { get; set; }
     }
