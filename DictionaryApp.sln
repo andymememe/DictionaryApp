@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryMain", "Dictionar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryAPI", "DictionaryAPI\DictionaryAPI.csproj", "{154DF744-A730-4456-B0EB-FBCFBD53390D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryAPI.Test", "DictionaryApi.Test\DictionaryAPI.Test.csproj", "{31444A84-251B-4862-9C52-A4876C8DD4E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DictionaryAPI.Test", "DictionaryAPI.Test\DictionaryAPI.Test.csproj", "{31444A84-251B-4862-9C52-A4876C8DD4E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
