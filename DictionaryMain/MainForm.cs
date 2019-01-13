@@ -16,8 +16,11 @@ namespace DictionaryMain
 {
     public partial class MainForm : Form
     {
-        public static readonly string[] Languages = { "中文", "英文" };
-        public static readonly string[] LanguageCodes = { "zho", "eng" };
+        public static readonly Dictionary<string, string> Languages = new Dictionary<string, string>
+        {
+            { "中文", "zho" },
+            { "英文", "eng" }
+        };
 
         public MainForm()
         {
@@ -26,8 +29,8 @@ namespace DictionaryMain
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            Languages.ToList().ForEach(s => fromBox.Items.Add(s));
-            Languages.ToList().ForEach(s => toBox.Items.Add(s));
+            Languages.Keys.ToList().ForEach(s => fromBox.Items.Add(s));
+            Languages.Keys.ToList().ForEach(s => toBox.Items.Add(s));
             fromBox.SelectedIndex = 0;
             toBox.SelectedIndex = 1;
             inputBox.Text = Clipboard.GetText().Split(' ')[0];
@@ -35,8 +38,8 @@ namespace DictionaryMain
 
         private void submitBtn_Click(object sender, EventArgs e)
         {
-            string fromCode = LanguageCodes[fromBox.SelectedIndex];
-            string toCode = LanguageCodes[toBox.SelectedIndex];
+            string fromCode = Languages[fromBox.GetItemText(fromBox.SelectedItem)];
+            string toCode = Languages[toBox.GetItemText(toBox.SelectedItem)];
             getResult(fromCode, toCode, inputBox.Text.Trim());
             resultBox.Text = "(載入中...)";
         }

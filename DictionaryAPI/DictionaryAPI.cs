@@ -19,13 +19,14 @@ namespace DictionaryAPI
         internal const int LCMAP_SIMPLIFIED_CHINESE = 0x02000000;
         internal const int LCMAP_TRADITIONAL_CHINESE = 0x04000000;
 
+        // Simplified Chinese to Tradional Chinese
         [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int LCMapString(int Locale, int dwMapFlags, string lpSrcStr, int cchSrc, [Out] string lpDestStr, int cchDest);
 
         public async static Task<string> GetResult(string fromCode, string toCode, string input)
         {
             string jsonText = "";
-            string connUrl = String.Format(URLString, fromCode, toCode, input);
+            string connUrl = string.Format(URLString, fromCode, toCode, input);
             try
             {
                 WebResponse httpResult = await WebRequest.Create(connUrl).GetResponseAsync();
@@ -49,7 +50,7 @@ namespace DictionaryAPI
                 string translateResult = "";
                 string resultToZHTW = "";
 
-                if (!fromCode.Equals(toCode))
+                if (!fromCode.Equals(toCode)) // Translate
                 {
                     if (result.result == "ok" &&
                         result.tuc != null &&
@@ -63,7 +64,7 @@ namespace DictionaryAPI
                         translateResult = "(查無結果)";
                     }
                 }
-                else
+                else // Meaning
                 {
                     if (result.result == "ok" &&
                         result.tuc != null &&
@@ -79,13 +80,18 @@ namespace DictionaryAPI
                     }
                 }
 
+                if (toCode != "zho")
+                {
+                    return translateResult;
+                }
+
                 resultToZHTW = new string(' ', translateResult.Length);
                 LCMapString(LOCALE_SYSTEM_DEFAULT,
                             LCMAP_TRADITIONAL_CHINESE,
                             translateResult,
                             translateResult.Length,
                             resultToZHTW,
-                            translateResult.Length);
+                            translateResult.Length); // Translating Chinese Result (Simp. -> Trad.)
                 return resultToZHTW;
             }
             catch (Exception e)
