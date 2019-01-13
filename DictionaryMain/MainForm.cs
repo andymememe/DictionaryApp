@@ -22,6 +22,8 @@ namespace DictionaryMain
             { "英文", "eng" }
         };
 
+        private bool _isConn;
+
         public MainForm()
         {
             InitializeComponent();
@@ -29,6 +31,7 @@ namespace DictionaryMain
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            _isConn = false;
             Languages.Keys.ToList().ForEach(s => fromBox.Items.Add(s));
             Languages.Keys.ToList().ForEach(s => toBox.Items.Add(s));
             fromBox.SelectedIndex = 0;
@@ -40,20 +43,35 @@ namespace DictionaryMain
         {
             string fromCode = Languages[fromBox.GetItemText(fromBox.SelectedItem)];
             string toCode = Languages[toBox.GetItemText(toBox.SelectedItem)];
+            _isConn = true;
+            inputBox.Enabled = false;
+            fromBox.Enabled = false;
+            toBox.Enabled = false;
+            submitBtn.Enabled = false;
+
             getResult(fromCode, toCode, inputBox.Text.Trim());
             resultBox.Text = "(載入中...)";
         }
 
-        public async void getResult(string fromCode, string toCode, string input)
-        {
-            resultBox.Text = await DictionaryAPIConnection.GetResult(fromCode, toCode, input);
-        }
-
         private void wayLabel_Click(object sender, EventArgs e)
         {
+            if(_isConn)
+            {
+                return;
+            }
             int temp = fromBox.SelectedIndex;
             fromBox.SelectedIndex = toBox.SelectedIndex;
             toBox.SelectedIndex = temp;
+        }
+
+        private async void getResult(string fromCode, string toCode, string input)
+        {
+            resultBox.Text = await DictionaryAPIConnection.GetResult(fromCode, toCode, input);
+            _isConn = false;
+            inputBox.Enabled = true;
+            fromBox.Enabled = true;
+            toBox.Enabled = true;
+            submitBtn.Enabled = true;
         }
     }
 }
